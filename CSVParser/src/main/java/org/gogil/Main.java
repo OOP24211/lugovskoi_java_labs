@@ -1,20 +1,22 @@
 package org.gogil;
 
-import java.io.*;
-import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.gogil.arguments.ArgumentsValidator;
+import org.gogil.exceptions.ValidationException;
+import java.io.IOException;
 
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
-        String input_file = "input.txt";
-        String output_file = "output.csv";
         try {
-            Map<String, Integer> map_word_frequency = Word_frequency.count_words(input_file);
-            Set<Map.Entry<String, Integer>> sorted_word_counter = Word_counter.sort_word_frequency(map_word_frequency);
-            Writer_in_csv.write_csv(output_file, sorted_word_counter);
-            System.out.println("CSV created: " + output_file);
-        }
-        catch (IOException exception) {
-            System.err.println("Error: " + exception.getMessage());
+            new ArgumentsValidator().validate(args);
+            new CsvWordsParserCli(args[0], args[1]).run();
+        } catch (ValidationException exception) {
+            log.error("Ошибка валидации: {}", exception.getMessage());
+        } catch (IOException exception) {
+            log.error("Ошибка: {}", exception.getMessage());
         }
     }
 }
