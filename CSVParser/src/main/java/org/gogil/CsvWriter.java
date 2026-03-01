@@ -1,16 +1,16 @@
 package org.gogil;
 
 import java.io.*;
-import java.util.*;
+import java.util.List;
 
-public class CsvWriter {
-    public static void writeCsv(String fileName, Set<Map.Entry<String, Integer>> wordFrequencyEntries)
-            throws IOException {
+public class CsvWriter implements IWriter {
+    @Override
+    public void write(String fileName, List<List<String>> rows) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write("word, frequency\n");
+            writer.write("word,frequency");
             writer.newLine();
-            for (Map.Entry<String, Integer> entry : wordFrequencyEntries) {
-                writer.write(entry.getKey() + "," + entry.getValue());
+            for (List<String> row : rows) {
+                writer.write(String.join(",", row));
                 writer.newLine();
             }
         }

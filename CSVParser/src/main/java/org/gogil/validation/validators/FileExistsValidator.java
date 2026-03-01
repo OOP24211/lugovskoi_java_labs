@@ -2,13 +2,15 @@ package org.gogil.validators;
 
 import org.gogil.exceptions.SourceFileNotFoundException;
 import org.gogil.exceptions.ValidationException;
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileExistsValidator implements IValidator<String> {
     @Override
     public void validate(String filePath) throws ValidationException {
-        File file = new File(filePath);
-        if (!file.exists()) {
+        Path path = Paths.get(filePath);
+        if (!Files.exists(path)) {
             throw new SourceFileNotFoundException("Файл не найден: " + filePath);
         }
     }

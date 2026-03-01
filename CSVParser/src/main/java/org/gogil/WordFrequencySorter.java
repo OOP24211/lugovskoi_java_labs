@@ -3,10 +3,14 @@ package org.gogil;
 import java.util.*;
 
 public class WordFrequencySorter {
-    public static Set<Map.Entry<String, Integer>> sortWordFrequency(Map<String, Integer> mapWordFrequency, Comparator<Map.Entry<String, Integer>> comparator) {
-        Set<Map.Entry<String, Integer>> entrySet = mapWordFrequency.entrySet();
-        Set<Map.Entry<String, Integer>> sortedEntries = new TreeSet<>(comparator);
-        sortedEntries.addAll(entrySet);
-        return sortedEntries;
+    public static List<WordFrequency> sortWordFrequency(
+            Map<String, Integer> mapWordFrequency,
+            Comparator<WordFrequency> comparator) {
+        List<WordFrequency> entries = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : mapWordFrequency.entrySet()) {
+            entries.add(new WordFrequency(entry.getKey(), entry.getValue()));
+        }
+        entries.sort(comparator);
+        return entries;
     }
 }
