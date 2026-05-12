@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.gogil.chat.client.ui.RegisterController"
+      spacing="12"
+      alignment="CENTER"
+      prefWidth="380"
+      prefHeight="360"
+      styleClass="auth-container">
+
+    <Label text="Регистрация" styleClass="auth-title"/>
+
+    <TextField fx:id="userNameField"
+               promptText="Имя пользователя"
+               maxWidth="280"/>
+
+    <PasswordField fx:id="passwordField"
+                   promptText="Пароль"
+                   maxWidth="280"/>
+
+    <PasswordField fx:id="confirmPasswordField"
+                   promptText="Повторите пароль"
+                   maxWidth="280"/>
+
+    <Label fx:id="errorLabel" styleClass="error-label"/>
+
+    <Button text="Зарегистрироваться"
+            onAction="#onRegisterClicked"
+            prefWidth="280"/>
+
+    <Button text="Уже есть аккаунт? Войти"
+            onAction="#onGoToLoginClicked"
+            prefWidth="280"
+            styleClass="link-button"/>
+
+</VBox>

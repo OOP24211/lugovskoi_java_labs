@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.gogil.chat.client.ui.ChatController"
+            prefWidth="900"
+            prefHeight="650"
+            styleClass="root">
+
+    <left>
+        <VBox prefWidth="200" styleClass="side-panel">
+            <Label text="Комнаты" styleClass="panel-title"/>
+            <ListView fx:id="roomListView" VBox.vgrow="ALWAYS"/>
+            <Button text="Создать комнату"
+                    onAction="#onCreateRoomClicked"
+                    maxWidth="Infinity"
+                    styleClass="button"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox styleClass="center-panel">
+            <Label fx:id="currentRoomLabel"
+                   text="Выберите комнату"
+                   styleClass="room-title"/>
+            <ListView fx:id="messageListView" VBox.vgrow="ALWAYS"/>
+            <HBox spacing="8" styleClass="input-panel">
+                <TextField fx:id="messageField"
+                           promptText="Введите сообщение..."
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="Отправить" onAction="#onSendClicked"/>
+                <Button text="Файл" onAction="#onSendFileClicked"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <right>
+        <VBox prefWidth="160" styleClass="side-panel">
+            <Label text="Пользователи" styleClass="panel-title"/>
+            <ListView fx:id="userListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </right>
+
+</BorderPane>

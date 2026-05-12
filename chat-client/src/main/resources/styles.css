@@ -1,0 +1,193 @@
+.root {
+    -fx-background-color: #1e1e2e;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+}
+
+.button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.button:hover {
+    -fx-background-color: #574fd6;
+}
+
+.button:pressed {
+    -fx-background-color: #4a42c0;
+}
+
+.button:focused {
+    -fx-background-color: #6c63ff;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #2a2a3e;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #888899;
+    -fx-background-radius: 6;
+    -fx-border-color: #3a3a5e;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 8 12 8 12;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #6c63ff;
+}
+
+.label {
+    -fx-text-fill: #ccccdd;
+}
+
+.list-view {
+    -fx-background-color: #2a2a3e;
+    -fx-border-color: #3a3a5e;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ccccdd;
+    -fx-padding: 6 10 6 10;
+}
+
+.list-cell:hover {
+    -fx-background-color: #3a3a5e;
+}
+
+.list-cell:selected {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+}
+
+.scroll-bar {
+    -fx-background-color: #2a2a3e;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #3a3a5e;
+    -fx-background-radius: 4;
+}
+
+.side-panel {
+    -fx-padding: 12;
+    -fx-background-color: #16162a;
+    -fx-border-color: #2a2a4a;
+    -fx-border-width: 0 1 0 0;
+}
+
+.center-panel {
+    -fx-padding: 12;
+    -fx-background-color: #1e1e2e;
+}
+
+.panel-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #888899;
+    -fx-padding: 0 0 8 4;
+}
+
+.room-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 0 0 8 4;
+}
+
+.input-panel {
+    -fx-padding: 8 0 0 0;
+}
+
+.message-sender {
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-text-fill: #aaaacc;
+}
+
+.message-text {
+    -fx-text-fill: #ddddee;
+    -fx-font-size: 13px;
+}
+
+.file-label {
+    -fx-text-fill: #aaaaff;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.system-join {
+    -fx-text-fill: #55aa55;
+    -fx-font-size: 11px;
+}
+
+.system-leave {
+    -fx-text-fill: #888899;
+    -fx-font-size: 11px;
+}
+
+#messageListView .list-cell:selected {
+    -fx-background-color: transparent;
+}
+
+#messageListView .list-cell:hover {
+    -fx-background-color: transparent;
+}
+
+#userListView .list-cell:selected {
+    -fx-background-color: transparent;
+}
+
+#userListView .list-cell:hover {
+    -fx-background-color: transparent;
+}
+
+.auth-container {
+    -fx-background-color: #1e1e2e;
+    -fx-padding: 40;
+}
+
+.auth-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 0 0 10 0;
+}
+
+.error-label {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 12px;
+}
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6c63ff;
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-padding: 4 0 4 0;
+    -fx-border-width: 0;
+}
+
+.link-button:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #574fd6;
+}
+
+.link-button:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.link-button:pressed {
+    -fx-background-color: transparent;
+}
