@@ -45,6 +45,10 @@ public class Transaction {
 
     private LocalDateTime transactionDate;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     private LocalDateTime deletedAt;
 
     public Transaction(Seller seller, BigDecimal amount, PaymentType paymentType) {
@@ -52,6 +56,7 @@ public class Transaction {
         this.amount = amount;
         this.paymentType = paymentType;
         this.transactionDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     public boolean isActive() {

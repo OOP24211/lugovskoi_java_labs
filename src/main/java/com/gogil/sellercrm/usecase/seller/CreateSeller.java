@@ -22,7 +22,9 @@ public class CreateSeller {
                 saved.getId(),
                 saved.getName(),
                 saved.getContactInfo(),
-                saved.getRegistrationDate()
+                saved.getRegistrationDate(),
+                saved.getCreatedAt(),
+                saved.getUpdatedAt()
         );
     }
 }

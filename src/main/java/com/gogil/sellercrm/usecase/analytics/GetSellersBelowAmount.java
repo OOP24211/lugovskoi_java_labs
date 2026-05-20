@@ -33,7 +33,9 @@ public class GetSellersBelowAmount {
                         seller.getId(),
                         seller.getName(),
                         seller.getContactInfo(),
-                        seller.getRegistrationDate()
+                        seller.getRegistrationDate(),
+                        seller.getCreatedAt(),
+                        seller.getUpdatedAt()
                 ))
                 .collect(Collectors.toList());
     }

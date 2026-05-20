@@ -23,7 +23,9 @@ public class GetSeller {
                 seller.getId(),
                 seller.getName(),
                 seller.getContactInfo(),
-                seller.getRegistrationDate()
+                seller.getRegistrationDate(),
+                seller.getCreatedAt(),
+                seller.getUpdatedAt()
         );
     }
 }

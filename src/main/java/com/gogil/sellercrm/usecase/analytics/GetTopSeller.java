@@ -34,7 +34,9 @@ public class GetTopSeller {
                 topSeller.getId(),
                 topSeller.getName(),
                 topSeller.getContactInfo(),
-                topSeller.getRegistrationDate()
+                topSeller.getRegistrationDate(),
+                topSeller.getCreatedAt(),
+                topSeller.getUpdatedAt()
         );
     }
 

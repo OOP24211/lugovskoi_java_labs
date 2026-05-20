@@ -33,12 +33,17 @@ public class Seller {
 
     private LocalDateTime registrationDate;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     private LocalDateTime deletedAt;
 
     public Seller(String name, String contactInfo) {
         this.name = name;
         this.contactInfo = contactInfo;
         this.registrationDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     public boolean isActive() {

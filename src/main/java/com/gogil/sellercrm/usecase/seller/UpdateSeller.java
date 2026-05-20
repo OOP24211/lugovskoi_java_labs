@@ -7,6 +7,8 @@ import com.gogil.sellercrm.domain.seller.ISellerRepository;
 import com.gogil.sellercrm.domain.seller.Seller;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UpdateSeller {
 
@@ -23,13 +25,16 @@ public class UpdateSeller {
         seller.setName(request.getName());
         seller.setContactInfo(request.getContactInfo());
 
+        seller.setUpdatedAt(LocalDateTime.now());
         Seller update = sellerRepository.save(seller);
 
         return new SellerResponse(
                 update.getId(),
                 update.getName(),
                 update.getContactInfo(),
-                update.getRegistrationDate()
+                update.getRegistrationDate(),
+                update.getCreatedAt(),
+                update.getUpdatedAt()
         );
     }
 }

@@ -13,4 +13,6 @@ public class SellerResponse {
     private String name;
     private String contactInfo;
     private LocalDateTime registrationDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

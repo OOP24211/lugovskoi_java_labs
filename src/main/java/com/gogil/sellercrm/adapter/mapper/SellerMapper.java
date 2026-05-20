@@ -17,7 +17,9 @@ public class SellerMapper {
                 seller.getId(),
                 seller.getName(),
                 seller.getContactInfo(),
-                seller.getRegistrationDate()
+                seller.getRegistrationDate(),
+                seller.getCreatedAt(),
+                seller.getUpdatedAt()
         );
     }
 }
