@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Моя аналитика</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('my-analytics')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Моя аналитика</div>
+            <div class="page-sub">Ваши показатели и статистика</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="stats-grid mb-5">
+            <div class="stat-card">
+                <div class="stat-label">Транзакций</div>
+                <div class="stat-value" th:text="${transactionCount}">0</div>
+                <div class="stat-sub">всего совершено</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Общая выручка</div>
+                <div class="stat-value" th:text="${#numbers.formatDecimal(totalRevenue, 1, 2)}">0.00</div>
+                <div class="stat-sub">по всем транзакциям</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Средний чек</div>
+                <div class="stat-value" th:text="${#numbers.formatDecimal(avgAmount, 1, 2)}">0.00</div>
+                <div class="stat-sub">за одну транзакцию</div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+
+            <div class="card">
+                <div class="card-header"><div class="card-title">Лучший период активности</div></div>
+                <div class="card-body">
+                    <div th:if="${bestPeriod != null}">
+                        <div class="text-dim" style="font-size:11px;margin-bottom:10px">
+                            Период с наибольшим количеством транзакций
+                        </div>
+                        <div style="font-size:14px;font-weight:500;margin-bottom:10px;font-family:'JetBrains Mono',monospace">
+                            <span th:text="${#temporals.format(bestPeriod.from, 'dd.MM.yyyy')}">—</span>
+                            <span class="text-dim"> → </span>
+                            <span th:text="${#temporals.format(bestPeriod.to, 'dd.MM.yyyy')}">—</span>
+                        </div>
+                        <div class="text-dim" style="font-size:12px">
+                            Транзакций:
+                            <span class="text-violet" style="font-weight:600"
+                                  th:text="${bestPeriod.transactionCount}">0</span>
+                        </div>
+                    </div>
+                    <div th:if="${bestPeriodError != null}" class="text-dim" style="font-size:12.5px" th:text="${bestPeriodError}">—</div>
+                    <div th:if="${bestPeriod == null && bestPeriodError == null}" class="empty-state" style="padding:20px">
+                        Недостаточно данных
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">По месяцам</div>
+                </div>
+                <div th:if="${monthlyStats.isEmpty()}" class="empty-state" style="padding:20px">Нет данных</div>
+                <div th:if="${!monthlyStats.isEmpty()}" class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Месяц</th>
+                            <th>Транзакций</th>
+                            <th>Выручка</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="stat : ${monthlyStats}">
+                            <td class="month-name" style="text-transform:capitalize" th:text="${stat.month}">—</td>
+                            <td class="text-muted text-mono" th:text="${stat.transactionCount}">0</td>
+                            <td class="amount-cell" th:text="${#numbers.formatDecimal(stat.totalAmount, 1, 2)}">0.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

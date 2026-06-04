@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Дашборд</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Дашборд</div>
+            <div class="page-sub">Общая сводка по системе</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Продавцов</div>
+                <div class="stat-value" th:text="${sellerCount}">0</div>
+                <div class="stat-sub">активных в системе</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Транзакций</div>
+                <div class="stat-value" th:text="${transactionCount}">0</div>
+                <div class="stat-sub">всего совершено</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Общая выручка</div>
+                <div class="stat-value" th:text="${#numbers.formatDecimal(totalRevenue, 1, 2)}">0.00</div>
+                <div class="stat-sub">по всем транзакциям</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Топ продавец сегодня</div>
+            </div>
+            <div class="card-body">
+                <div th:if="${topSellerToday != null}">
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;"
+                         th:text="${topSellerToday.name}">—</div>
+                    <div class="text-muted" th:text="${topSellerToday.contactInfo}">—</div>
+                </div>
+                <div th:if="${topSellerToday == null}" class="empty-state">
+                    Сегодня транзакций ещё не было
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

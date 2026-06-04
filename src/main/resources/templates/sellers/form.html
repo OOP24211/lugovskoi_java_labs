@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${isEdit} ? 'Редактировать продавца' : 'Новый продавец'">SellerCRM</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('sellers')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title" th:text="${isEdit} ? 'Редактировать продавца' : 'Новый продавец'">Продавец</div>
+            <div class="page-sub" th:text="${isEdit} ? 'Изменить данные продавца' : 'Заполните данные нового продавца'">—</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="card" style="max-width: 520px;">
+            <div class="card-body">
+
+                <!-- CREATE form -->
+                <form th:if="${!isEdit}" th:action="@{/sellers}" method="post" th:object="${request}">
+                    <div class="form-group">
+                        <label class="form-label">Имя продавца</label>
+                        <input class="form-control" type="text" th:field="*{name}" placeholder="Введите имя"/>
+                        <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Контактные данные</label>
+                        <input class="form-control" type="text" th:field="*{contactInfo}" placeholder="Email, телефон и т.д."/>
+                        <div class="field-error" th:if="${#fields.hasErrors('contactInfo')}" th:errors="*{contactInfo}"></div>
+                    </div>
+                    <div class="d-flex gap-2 mt-5">
+                        <button class="btn btn-primary" type="submit">Создать продавца</button>
+                        <a th:href="@{/sellers}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+
+                <!-- EDIT form -->
+                <form th:if="${isEdit}" th:action="@{/sellers/{id}/edit(id=${sellerId})}" method="post" th:object="${request}">
+                    <div class="form-group">
+                        <label class="form-label">Имя продавца</label>
+                        <input class="form-control" type="text" th:field="*{name}"/>
+                        <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Контактные данные</label>
+                        <input class="form-control" type="text" th:field="*{contactInfo}"/>
+                        <div class="field-error" th:if="${#fields.hasErrors('contactInfo')}" th:errors="*{contactInfo}"></div>
+                    </div>
+                    <div class="d-flex gap-2 mt-5">
+                        <button class="btn btn-primary" type="submit">Сохранить</button>
+                        <a th:href="@{/sellers}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

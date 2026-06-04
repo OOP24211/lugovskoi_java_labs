@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Мои транзакции</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('my-transactions')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Мои транзакции</div>
+            <div class="page-sub" th:text="${transactions.size()} + ' транзакций'">0</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="card mb-4">
+            <div class="card-header"><div class="card-title">Добавить транзакцию</div></div>
+            <div class="card-body">
+                <form th:action="@{/my/transactions}" method="post" th:object="${request}">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Тип оплаты</label>
+                            <select class="form-control" th:field="*{paymentType}">
+                                <option value="">— Выберите —</option>
+                                <option th:each="type : ${paymentTypes}" th:value="${type}" th:text="${type}"></option>
+                            </select>
+                            <div class="field-error" th:if="${#fields.hasErrors('paymentType')}" th:errors="*{paymentType}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Сумма</label>
+                            <input class="form-control" type="number" step="0.01" min="0.01"
+                                   th:field="*{amount}" placeholder="0.00"/>
+                            <div class="field-error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Добавить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="filter-bar">
+                <form th:action="@{/my/transactions}" method="get" class="d-flex gap-2 align-center" style="flex-wrap:wrap;width:100%">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Тип оплаты</label>
+                        <select class="form-control" name="paymentType" style="min-width:130px">
+                            <option value="">Все</option>
+                            <option th:each="type : ${paymentTypes}"
+                                    th:value="${type}"
+                                    th:text="${type}"
+                                    th:selected="${type.name() == selectedPaymentType}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">С</label>
+                        <input class="form-control" type="date" name="from" th:value="${from}"/>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">По</label>
+                        <input class="form-control" type="date" name="to" th:value="${to}"/>
+                    </div>
+                    <div style="margin-top:16px;display:flex;gap:6px">
+                        <button class="btn btn-primary" type="submit">Фильтр</button>
+                        <a th:href="@{/my/transactions}" class="btn btn-ghost">Сбросить</a>
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${transactions.isEmpty()}" class="empty-state">Транзакций не найдено</div>
+            <div th:if="${!transactions.isEmpty()}" class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Сумма</th>
+                        <th>Тип оплаты</th>
+                        <th>Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tx : ${transactions}">
+                        <td class="text-dim text-mono" th:text="${tx.id}">1</td>
+                        <td class="amount-cell" th:text="${#numbers.formatDecimal(tx.amount, 1, 2)}">0.00</td>
+                        <td>
+                                <span th:text="${tx.paymentType}"
+                                      th:classappend="${tx.paymentType.name() == 'CASH'} ? 'badge-cash' :
+                                                      (${tx.paymentType.name() == 'CARD'} ? 'badge-card' : 'badge-transfer')"
+                                      class="badge">—</span>
+                        </td>
+                        <td class="text-dim"
+                            th:text="${#temporals.format(tx.transactionDate, 'dd.MM.yyyy HH:mm')}">—</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

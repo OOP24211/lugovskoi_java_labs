@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Аналитика</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('analytics')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Аналитика</div>
+            <div class="page-sub">Статистика и показатели по всей системе</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <!-- Топ продавец -->
+        <div class="card mb-5">
+            <div class="card-header">
+                <div class="card-title">Топ продавец по выручке</div>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/analytics/top-seller}" method="get" class="inline-form">
+                    <div class="form-group">
+                        <label class="form-label">Период</label>
+                        <select class="form-control" name="period">
+                            <option th:each="p : ${periods}"
+                                    th:value="${p}"
+                                    th:text="${p}"
+                                    th:selected="${p == selectedPeriod}">
+                            </option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Найти</button>
+                </form>
+
+                <div class="result-box" th:if="${topSeller != null}">
+                    <div style="font-size: 16px; font-weight: 600; margin-bottom: 4px;"
+                         th:text="${topSeller.name}">—</div>
+                    <div class="text-muted" th:text="${topSeller.contactInfo}">—</div>
+                </div>
+                <div class="alert alert-error mt-5" th:if="${topSellerError}" th:text="${topSellerError}"></div>
+            </div>
+        </div>
+
+        <!-- Продавцы ниже суммы -->
+        <div class="card mb-5">
+            <div class="card-header">
+                <div class="card-title">Продавцы с выручкой ниже указанной</div>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/analytics/sellers-below}" method="get" class="inline-form mb-5">
+                    <div class="form-group">
+                        <label class="form-label">Период</label>
+                        <select class="form-control" name="period">
+                            <option th:each="p : ${periods}"
+                                    th:value="${p}"
+                                    th:text="${p}"
+                                    th:selected="${p == belowPeriod}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Максимальная сумма</label>
+                        <input class="form-control" type="number" step="0.01" name="amount"
+                               th:value="${belowAmount}" placeholder="0.00"/>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Найти</button>
+                </form>
+
+                <div th:if="${sellersBelowResult != null}">
+                    <div th:if="${sellersBelowResult.isEmpty()}" class="text-muted">
+                        Продавцов с такой выручкой не найдено
+                    </div>
+                    <div th:if="${!sellersBelowResult.isEmpty()}" class="table-wrap">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>Контакты</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="seller : ${sellersBelowResult}">
+                                <td class="text-muted" th:text="${seller.id}">1</td>
+                                <td th:text="${seller.name}">—</td>
+                                <td class="text-muted" th:text="${seller.contactInfo}">—</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="alert alert-error" th:if="${sellersBelowError}" th:text="${sellersBelowError}"></div>
+            </div>
+        </div>
+
+        <!-- Лучший период продавца -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Лучший период продавца</div>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/analytics/best-period}" method="get" class="inline-form">
+                    <div class="form-group">
+                        <label class="form-label">Продавец</label>
+                        <select class="form-control" name="sellerId">
+                            <option th:each="seller : ${sellers}"
+                                    th:value="${seller.id}"
+                                    th:text="${seller.name}"
+                                    th:selected="${seller.id == bestPeriodSellerId}">
+                            </option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Найти</button>
+                </form>
+
+                <div class="result-box" th:if="${bestPeriodResult != null}">
+                    <div class="text-muted" style="font-size: 12px; margin-bottom: 8px;">Период наибольшей активности</div>
+                    <div style="font-size: 15px; font-weight: 500;">
+                        <span th:text="${#temporals.format(bestPeriodResult.from, 'dd.MM.yyyy HH:mm')}">—</span>
+                        &nbsp;→&nbsp;
+                        <span th:text="${#temporals.format(bestPeriodResult.to, 'dd.MM.yyyy HH:mm')}">—</span>
+                    </div>
+                    <div class="text-muted mt-5">
+                        Транзакций в периоде: <span class="text-accent" th:text="${bestPeriodResult.transactionCount}">0</span>
+                    </div>
+                </div>
+                <div class="alert alert-error mt-5" th:if="${bestPeriodError}" th:text="${bestPeriodError}"></div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

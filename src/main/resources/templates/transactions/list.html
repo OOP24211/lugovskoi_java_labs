@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Транзакции</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('transactions')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Транзакции</div>
+            <div class="page-sub" th:text="${transactions.size()} + ' транзакций'">0</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="card">
+
+            <div class="filter-bar">
+                <form th:action="@{/transactions}" method="get" class="d-flex gap-2 align-center" style="flex-wrap:wrap;width:100%">
+                    <div class="form-group" style="min-width:180px;margin-bottom:0">
+                        <label class="form-label">Продавец</label>
+                        <select class="form-control" name="sellerId">
+                            <option value="">Все продавцы</option>
+                            <option th:each="seller : ${sellers}"
+                                    th:value="${seller.id}"
+                                    th:text="${seller.name}"
+                                    th:selected="${seller.id == selectedSellerId}">
+                            </option>
+                        </select>
+                    </div>
+                    <div style="margin-top:18px;display:flex;gap:6px">
+                        <button class="btn btn-primary" type="submit">Применить</button>
+                        <a th:if="${selectedSellerId != null}" th:href="@{/transactions}" class="btn btn-ghost">Сбросить</a>
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${transactions.isEmpty()}" class="empty-state">Транзакций не найдено</div>
+            <div th:if="${!transactions.isEmpty()}" class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Продавец</th>
+                        <th>Сумма</th>
+                        <th>Тип оплаты</th>
+                        <th>Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tx : ${transactions}">
+                        <td class="text-dim text-mono" th:text="${tx.id}">1</td>
+                        <td style="font-weight:500"
+                            th:text="${sellerNames.containsKey(tx.sellerId)} ? ${sellerNames.get(tx.sellerId)} : tx.sellerId">—</td>
+                        <td class="amount-cell" th:text="${#numbers.formatDecimal(tx.amount, 1, 2)}">0.00</td>
+                        <td>
+                                <span th:text="${tx.paymentType}"
+                                      th:classappend="${tx.paymentType.name() == 'CASH'} ? 'badge-cash' :
+                                                      (${tx.paymentType.name() == 'CARD'} ? 'badge-card' : 'badge-transfer')"
+                                      class="badge">—</span>
+                        </td>
+                        <td class="text-dim"
+                            th:text="${#temporals.format(tx.transactionDate, 'dd.MM.yyyy HH:mm')}">—</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
