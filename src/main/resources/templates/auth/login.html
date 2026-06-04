@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Вход</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --border: #2a2d3a;
+            --accent: #4f8ef7;
+            --accent-hover: #3a7aee;
+            --text: #e8eaf0;
+            --text-muted: #6b7280;
+            --error: #f87171;
+            --success: #34d399;
+        }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(ellipse at 20% 50%, rgba(79,142,247,0.07) 0%, transparent 60%),
+                              radial-gradient(ellipse at 80% 20%, rgba(79,142,247,0.05) 0%, transparent 50%);
+        }
+
+        .login-wrapper { width: 100%; max-width: 400px; padding: 0 24px; }
+
+        .brand { text-align: center; margin-bottom: 40px; }
+        .brand-title { font-size: 22px; font-weight: 600; letter-spacing: -0.5px; }
+        .brand-title span { color: var(--accent); }
+        .brand-sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; font-weight: 300; }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 36px; }
+        .card-title { font-size: 17px; font-weight: 500; margin-bottom: 28px; }
+
+        .alert { padding: 11px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; }
+        .alert-error { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--error); }
+        .alert-success { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); color: var(--success); }
+
+        .form-group { margin-bottom: 18px; }
+
+        label { display: block; font-size: 12px; font-weight: 500; color: var(--text-muted);
+                text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+
+        input { width: 100%; background: var(--bg); border: 1px solid var(--border);
+                border-radius: 8px; padding: 11px 14px; font-family: 'Sora', sans-serif;
+                font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; }
+
+        input:focus { border-color: var(--accent); }
+        input::placeholder { color: var(--text-muted); }
+
+        .btn { width: 100%; padding: 12px; background: var(--accent); color: #fff; border: none;
+               border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500;
+               cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+        .btn:hover { background: var(--accent-hover); }
+
+        .register-link { display: block; text-align: center; margin-top: 20px;
+                         font-size: 13px; color: var(--text-muted); }
+        .register-link a { color: var(--accent); text-decoration: none; }
+        .register-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+    <div class="brand">
+        <div class="brand-title">Seller<span>CRM</span></div>
+        <div class="brand-sub">Система управления продавцами</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Вход в систему</div>
+
+        <div class="alert alert-error" th:if="${param.error}">Неверное имя пользователя или пароль</div>
+        <div class="alert alert-success" th:if="${param.logout}">Вы вышли из системы</div>
+        <div class="alert alert-success" th:if="${param.registered}">Регистрация прошла успешно. Войдите в систему.</div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" name="username" placeholder="Введите логин" autofocus/>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" placeholder="Введите пароль"/>
+            </div>
+            <button class="btn" type="submit">Войти</button>
+        </form>
+    </div>
+
+    <div class="register-link">
+        Ещё нет аккаунта? <a th:href="@{/register}">Зарегистрироваться</a>
+    </div>
+</div>
+
+</body>
+</html>

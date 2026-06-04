@@ -14,10 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateTransactionRequest {
-
-    @NotNull(message = "Укажите id продавца")
-    private Long sellerId;
+public class CreateOwnTransactionRequest {
 
     @NotNull(message = "Выберите тип оплаты")
     private PaymentType paymentType;

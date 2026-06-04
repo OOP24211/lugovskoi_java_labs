@@ -4,11 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class CreateSellerRequest {
 
     @NotBlank(message = "Имя не должно быть пустым")
@@ -16,5 +17,4 @@ public class CreateSellerRequest {
 
     @NotBlank(message = "Заполните поле 'контактные данные'")
     private String contactInfo;
-
 }

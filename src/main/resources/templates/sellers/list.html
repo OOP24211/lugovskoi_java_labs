@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Продавцы</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('sellers')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Продавцы</div>
+            <div class="page-sub" th:text="${sellers.size()} + ' активных продавцов'">0</div>
+        </div>
+        <a th:href="@{/sellers/new}" class="btn btn-primary">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Добавить
+        </a>
+    </div>
+
+    <div class="page-content">
+
+        <form th:action="@{/sellers}" method="get" class="search-bar">
+            <input class="search-input" type="text" name="search"
+                   th:value="${search}" placeholder="Поиск по имени..."/>
+            <button class="btn btn-secondary" type="submit">Найти</button>
+            <a th:if="${search != null}" th:href="@{/sellers}" class="btn btn-ghost">Сбросить</a>
+        </form>
+
+        <div class="card">
+            <div th:if="${sellers.isEmpty()}" class="empty-state">Продавцов не найдено</div>
+            <div th:if="${!sellers.isEmpty()}" class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Имя</th>
+                        <th>Контакты</th>
+                        <th>Выручка</th>
+                        <th>Регистрация</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="seller : ${sellers}">
+                        <td class="text-dim text-mono" th:text="${seller.id}">1</td>
+                        <td style="font-weight:500" th:text="${seller.name}">Имя</td>
+                        <td class="text-muted" th:text="${seller.contactInfo}">—</td>
+                        <td class="amount-cell"
+                            th:text="${revenueMap.containsKey(seller.id)} ? ${#numbers.formatDecimal(revenueMap.get(seller.id), 1, 2)} : '0.00'">
+                            0.00
+                        </td>
+                        <td class="text-dim"
+                            th:text="${#temporals.format(seller.registrationDate, 'dd.MM.yyyy')}">—</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/sellers/{id}/edit(id=${seller.id})}"
+                                   class="btn btn-secondary btn-sm">Изменить</a>
+                                <form th:action="@{/sellers/{id}/delete(id=${seller.id})}" method="post"
+                                      onsubmit="return confirm('Удалить продавца?')">
+                                    <button class="btn btn-danger btn-sm" type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

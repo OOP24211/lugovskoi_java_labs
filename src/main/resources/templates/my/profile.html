@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Профиль</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('my-profile')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Мой профиль</div>
+            <div class="page-sub">Информация об аккаунте</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="alert alert-success" th:if="${param.updated}">Контактные данные обновлены</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:800px">
+
+            <div class="card">
+                <div class="card-header"><div class="card-title">Данные</div></div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <div class="info-key">Имя</div>
+                        <div class="info-val" th:text="${seller.name}">—</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-key">Контакты</div>
+                        <div class="info-val" th:text="${seller.contactInfo}">—</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-key">Логин</div>
+                        <div class="info-val text-mono" th:text="${username}">—</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-key">Регистрация</div>
+                        <div class="info-val text-dim"
+                             th:text="${#temporals.format(seller.registrationDate, 'dd.MM.yyyy HH:mm')}">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><div class="card-title">Изменить контакты</div></div>
+                <div class="card-body">
+                    <form th:action="@{/my/profile}" method="post" th:object="${updateRequest}">
+                        <div class="form-group">
+                            <label class="form-label">Контактные данные</label>
+                            <input class="form-control" type="text" th:field="*{contactInfo}"
+                                   th:placeholder="${seller.contactInfo}"/>
+                            <div class="field-error" th:if="${#fields.hasErrors('contactInfo')}"
+                                 th:errors="*{contactInfo}"></div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

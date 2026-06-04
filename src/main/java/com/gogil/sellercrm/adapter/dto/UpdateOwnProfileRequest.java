@@ -8,10 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UpdateSellerRequest {
-
-    @NotBlank(message = "Имя не должно быть пустым")
-    private String name;
+public class UpdateOwnProfileRequest {
 
     @NotBlank(message = "Заполните поле 'контактные данные'")
     private String contactInfo;

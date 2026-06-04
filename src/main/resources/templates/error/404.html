@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Страница не найдена</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        body { display: flex; align-items: center; justify-content: center; }
+
+        .error-wrap { text-align: center; max-width: 400px; padding: 24px; }
+
+        .error-code {
+            font-size: 80px; font-weight: 600; letter-spacing: -4px;
+            color: var(--border); line-height: 1; margin-bottom: 16px;
+        }
+
+        .error-title { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+
+        .error-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+    </style>
+</head>
+<body>
+<div class="error-wrap">
+    <div class="error-code">404</div>
+    <div class="error-title">Страница не найдена</div>
+    <div class="error-sub">Такой страницы не существует или она была удалена</div>
+    <a href="/" class="btn btn-primary">На главную</a>
+</div>
+</body>
+</html>

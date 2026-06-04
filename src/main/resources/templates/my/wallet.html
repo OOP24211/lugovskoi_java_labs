@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerCRM — Кошелёк</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/sidebar :: sidebar('my-wallet')}"></div>
+
+<main class="main">
+    <div class="page-header">
+        <div>
+            <div class="page-title">Кошелёк</div>
+            <div class="page-sub">Баланс и история пополнений</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="wallet-card mb-5">
+            <div class="wallet-label">Текущий баланс</div>
+            <div>
+                <span class="wallet-balance" th:text="${#numbers.formatDecimal(wallet.balance, 1, 2)}">0.00</span>
+                <span class="wallet-currency">₽</span>
+            </div>
+            <div class="wallet-updated" th:if="${wallet.updatedAt != null}">
+                Последнее пополнение:
+                <span th:text="${#temporals.format(wallet.updatedAt, 'dd.MM.yyyy HH:mm')}">—</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">История пополнений</div>
+                <div class="text-dim" th:text="${history.size()} + ' записей'">0 записей</div>
+            </div>
+            <div th:if="${history.isEmpty()}" class="empty-state">Пополнений ещё не было</div>
+            <div th:if="${!history.isEmpty()}" class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Сумма</th>
+                        <th>Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="wt : ${history}">
+                        <td class="text-dim text-mono" th:text="${wt.id}">1</td>
+                        <td>
+                                <span class="text-success" style="font-family:'JetBrains Mono',monospace;font-weight:500">
+                                    +<span th:text="${#numbers.formatDecimal(wt.amount, 1, 2)}">0.00</span>
+                                </span>
+                        </td>
+                        <td class="text-dim"
+                            th:text="${#temporals.format(wt.createdAt, 'dd.MM.yyyy HH:mm')}">—</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>
